@@ -1,84 +1,87 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
 import { Link, router } from 'expo-router';
-
+import Entypo from 'react-native-vector-icons/Entypo';
 export default function SignIn() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: '',
+  });
 
-  const handleSignIn = () => {
+  const handleInputChange = (field, value) => {
+    setCredentials((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSignin = () => {
     // Add your sign-in logic here
-    console.log('Sign in:', email, password);
-    // On successful sign-in, navigate to the main app
-    router.replace('/(tabs)');
+    console.log('Signing in with:', credentials);
+    // Example: Call your authentication API here
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign In</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Pressable style={styles.button} onPress={handleSignIn}>
-        <Text style={styles.buttonText}>Sign In</Text>
-      </Pressable>
-      <Link href="/(auth)/signup" asChild>
-        <Pressable style={styles.linkButton}>
-          <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
-        </Pressable>
-      </Link>
+
+    <View className="flex-1">
+    <View className="flex-row justify-between mb-5 py-10 px-5 h-56">
+      <Text className="text-4xl text-white font-semibold">Hello! Sign In</Text>
+      <Entypo name="dots-three-horizontal" size={20} color="white" />
     </View>
+
+    <View className="bg-white rounded-t-3xl flex-1 px-5 py-8">
+      {/* Email Field */}
+      <View className="mb-5">
+        <Text className="text-lg text-[#ad23f5] font-semibold ml-2">Email Address</Text>
+        <TextInput
+          className="border-b-[1px] border-gray-300 px-4 py-3 text-[#ad23f5]"
+          placeholder="Enter your Email Address"
+          placeholderTextColor="#aaa"
+          keyboardType="email-address"
+          value={credentials.email}
+          onChangeText={(value) => handleInputChange('email', value)}
+        />
+      </View>
+
+      {/* Password Field */}
+      <View className="mb-5">
+        <Text className="text-lg text-[#ad23f5] font-semibold ml-2">Password</Text>
+        <TextInput
+          className="border-b-[1px] border-gray-300 px-4 py-3 text-[#ad23f5]"
+          placeholder="Enter your password"
+          placeholderTextColor="#aaa"
+          secureTextEntry
+          value={credentials.password}
+          onChangeText={(value) => handleInputChange('password', value)}
+        />
+      </View>
+
+      {/* Forgot Password */}
+      <View className="mb-5 flex justify-end text-center items-end">
+        <Text
+          className="ju items-end text-lg text-[#ad23f5] font-semibold ml-2"
+          onPress={() => navigation.navigate('ForgotPassword')}
+        >
+          Forgot Password?
+        </Text>
+      </View>
+
+      {/* Sign In Button */}
+      <Pressable onPress={handleSignin} className="py-3 px-8 rounded-3xl items-center bg-[#810fbe]">
+        <Text className="text-white text-lg font-semibold">SIGN IN</Text>
+      </Pressable>
+
+      {/* Navigate to Signup */}
+      <View className="absolute bottom-6 right-3 p-3">
+        <View className="items-end">
+          <Text className="text-lg opacity-80">Don't Have an Account?</Text>
+          <Text
+            className="text-2xl font-bold text-[#ad23f5]"
+            onPress={() => navigation.navigate('signup')}
+          >
+            Sign Up
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    padding: 15,
-    marginBottom: 15,
-    borderRadius: 5,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  linkButton: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  linkText: {
-    color: '#007AFF',
-  },
-}); 

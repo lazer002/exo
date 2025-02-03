@@ -1,96 +1,110 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
 import { Link, router } from 'expo-router';
-
+import Entypo from 'react-native-vector-icons/Entypo';
 export default function SignUp() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignUp = () => {
-    // Add your sign-up logic here
-    if (password !== confirmPassword) {
-      alert("Passwords don't match!");
-      return;
+  const [userData, setUserData] = useState({
+    fullName: '',
+    email: '',
+    phoneNumber: '',
+    password: ''
+  });
+  const handleInputChange = (field, value) => {
+    setUserData({
+      ...userData,
+      [field]: value
+    });
+  };
+
+  const handleSignup = async () => {
+    try {
+  
+
+console.log('====================================');
+console.log(userData);
+console.log('====================================');
+ 
+    } catch (error) {
+console.log('✌️error --->', error);
+
     }
-    console.log('Sign up:', email, password);
-    // On successful sign-up, navigate to the main app
-    router.replace('/(tabs)');
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-      />
-      <Pressable style={styles.button} onPress={handleSignUp}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </Pressable>
-      <Link href="/(auth)/signin" asChild>
-        <Pressable style={styles.linkButton}>
-          <Text style={styles.linkText}>Already have an account? Sign In</Text>
-        </Pressable>
-      </Link>
-    </View>
+    <View className="flex-1">
+        <View className="flex-row justify-between mb-5 py-10 px-5 h-56">
+          <Text className="text-4xl text-white font-semibold w-64">Create Your Account</Text>
+          <Entypo name="dots-three-horizontal" size={20} color="white" />
+        </View>
+
+        <View className="bg-white rounded-t-3xl flex-1 px-5 py-8">
+          <View className="mb-5">
+            <Text className="text-lg text-[#ad23f5] font-semibold ml-2">Full Name</Text>
+            <TextInput
+              className="border-b-[1px] border-gray-300 px-4 py-3 text-[#ad23f5]"
+              placeholder="Enter your full name"
+              placeholderTextColor="#aaa"
+              value={userData.fullName}
+              onChangeText={(value) => handleInputChange('fullName', value)}
+            />
+          </View>
+
+          <View className="mb-5">
+            <Text className="text-lg text-[#ad23f5] font-semibold ml-2">Email Address</Text>
+            <TextInput
+              className="border-b-[1px] border-gray-300 px-4 py-3 text-[#ad23f5]"
+              placeholder="Enter your Email Address"
+              placeholderTextColor="#aaa"
+              value={userData.email}
+              onChangeText={(value) => handleInputChange('email', value)}
+            />
+          </View>
+
+          <View className="mb-5">
+            <Text className="text-lg text-[#ad23f5] font-semibold ml-2">Phone Number</Text>
+            <TextInput
+              className="border-b-[1px] border-gray-300 px-4 py-3 text-[#ad23f5]"
+              placeholder="Enter your phone number"
+              placeholderTextColor="#aaa"
+              keyboardType="phone-pad"
+              value={userData.phoneNumber}
+              onChangeText={(value) => handleInputChange('phoneNumber', value)}
+            />
+          </View>
+
+          <View className="mb-5">
+            <Text className="text-lg text-[#ad23f5] font-semibold ml-2">Password</Text>
+            <TextInput
+              className="border-b-[1px] border-gray-300 px-4 py-3 text-[#ad23f5]"
+              placeholder="Enter your password"
+              placeholderTextColor="#aaa"
+              secureTextEntry
+              value={userData.password}
+              onChangeText={(value) => handleInputChange('password', value)}
+            />
+          </View>
+
+          <Pressable
+            onPress={handleSignup}
+            className="py-3 px-8 rounded-3xl items-center bg-[#810fbe]"
+          >
+            <Text className="text-white text-lg font-semibold">SIGN UP</Text>
+          </Pressable>
+
+          <View className="absolute bottom-6 right-3 p-3">
+            <View className="items-end">
+              <Text className="text-lg opacity-80">Already Have Account?</Text>
+              <Text
+                className="text-2xl font-bold text-[#ad23f5]"
+                onPress={() => navigation.navigate('signin')}
+              >
+                Sign In
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    padding: 15,
-    marginBottom: 15,
-    borderRadius: 5,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  linkButton: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  linkText: {
-    color: '#007AFF',
-  },
-}); 
