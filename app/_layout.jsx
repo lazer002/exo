@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import '../global.css'
 import { useColorScheme } from '@/components/useColorScheme';
+import { SafeAreaView } from 'react-native';
 
 
 
