@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import '../global.css'
 import { useColorScheme } from '@/components/useColorScheme';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 
 
@@ -52,6 +52,7 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
+ 
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(auth)" />
